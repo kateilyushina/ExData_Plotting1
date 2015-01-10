@@ -1,0 +1,16 @@
+{
+    "contents" : "# this script uses dplyr package. Install this package using install.packages(\"dplyr\")\n# this script uses data.table package. Install this package using install.packages(\"data.table\")\n\nlibrary(data.table)\n# Read data from file, set NA as \"?\"\ndata<-fread(\"household_power_consumption.txt\",header=TRUE, na.strings = \"?\")\n\nlibrary(dplyr)\ndata1<- mutate(data, Date=as.Date(Date, \"%d/%m/%Y\")) #Change data type to date\n  data2<- subset(data1, Date>=\"2007-02-01\" & Date<=\"2007-02-02\") #Subset two dates\n\n#Create new DateTime variable \n  data2$DateTime <- paste(as.character(data2$Date), data2$Time)\n\n#Convert to date in POSIXct format\n  data2$DateTime <- as.POSIXct(data2$DateTime, format=\"%Y-%m-%d %H:%M:%S\")\n\n#Change data type to numeric\n  data2<- mutate(data2,Sub_metering_1=as.numeric(Sub_metering_1),Sub_metering_2=as.numeric(Sub_metering_2))\n\n#Set location to display axis marks in English (optional)\n  Sys.setlocale(category = \"LC_TIME\", locale = \"C\")\n\npng(file=\"plot3.png\", width=480,height=480,units=\"px\") # Open PNG file device in WD\n  par(mar = c(5, 5, 2, 1), cex=0.7) # Set margins and text size ratio\n\n#Create plot and send to a file\nwith(data2,plot(DateTime,Sub_metering_1,type=\"l\", ylab=\"Energy sub metering\", xlab= \"\"))\nwith(data2,lines(DateTime,Sub_metering_2, col=\"red\"))\nwith(data2,lines(DateTime,Sub_metering_3, col=\"blue\"))\nlegend(\"topright\", pch = \"___\", col = c(\"black\",\"red\", \"blue\"), \n       legend = c(\"Sub_metering_1\", \"Sub_metering_2\",\"Sub_metering_3\"))\n\ndev.off() #Close PNG file device",
+    "created" : 1420921550765.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "108094777",
+    "id" : "B8AA7794",
+    "lastKnownWriteTime" : 1420924542,
+    "path" : "C:/Documents and Settings/Администратор/Рабочий стол/Kate/Coursera/Exploratary Data Analysis/Week1 Project/ExData_Plotting1/plot3.R",
+    "project_path" : "plot3.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

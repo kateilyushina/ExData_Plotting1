@@ -1,0 +1,16 @@
+{
+    "contents" : "# this script uses dplyr package. Install this package using install.packages(\"dplyr\")\n# this script uses data.table package. Install this package using install.packages(\"data.table\")\n\nlibrary(data.table)\n# Read data from file, set NA as \"?\"\n  data<-fread(\"household_power_consumption.txt\",header=TRUE, na.strings = \"?\")\n\nlibrary(dplyr)\n  data1<- mutate(data, Date=as.Date(Date, \"%d/%m/%Y\")) #Change data type to date\n    data2<- subset(data1, Date>=\"2007-02-01\" & Date<=\"2007-02-02\") #Subset two dates\n      data2<-mutate(data2,Global_active_power=as.numeric(Global_active_power)) #Change data type to numeric\n\npng(file=\"plot1.png\", width=480,height=480,units=\"px\") # Open PNG file device in WD\n  par(mar = c(5, 5, 2, 1), cex=0.7) # Set margins and text size ratio\n\n#Create histogram and send to a file\n  hist(data2$Global_active_power, main=\"Global Active Power\", col=\"red\", \n     xlab=\"Global Active Power (kilowatts)\", ylab=\"Frequency\")\n  dev.off() #close PNG file device\n",
+    "created" : 1420917663203.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3520036559",
+    "id" : "E18A3C9E",
+    "lastKnownWriteTime" : 1420924609,
+    "path" : "C:/Documents and Settings/Администратор/Рабочий стол/Kate/Coursera/Exploratary Data Analysis/Week1 Project/ExData_Plotting1/plot1.R",
+    "project_path" : "plot1.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

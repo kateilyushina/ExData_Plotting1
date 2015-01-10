@@ -1,0 +1,16 @@
+{
+    "contents" : "# this script uses dplyr package. Install this package using install.packages(\"dplyr\")\n# this script uses data.table package. Install this package using install.packages(\"data.table\")\n\nlibrary(data.table)\n# Read data from file, set NA as \"?\"\ndata<-fread(\"household_power_consumption.txt\",header=TRUE, na.strings = \"?\")\n\nlibrary(dplyr)\n  data1<- mutate(data, Date=as.Date(Date, \"%d/%m/%Y\")) #Change data type to date\n    data2<- subset(data1, Date>=\"2007-02-01\" & Date<=\"2007-02-02\") #Subset two dates\n#Create new DateTime variable \n    data2$DateTime <- paste(as.character(data2$Date), data2$Time)\n#Convert to date in POSIXct format\n    data2$DateTime <- as.POSIXct(data2$DateTime, format=\"%Y-%m-%d %H:%M:%S\")\n#Change data type to numeric\n    data2<-mutate(data2,Global_active_power=as.numeric(Global_active_power)) \n\n#Set location to display axis marks in English (optional)\nSys.setlocale(category = \"LC_TIME\", locale = \"C\")\n\npng(file=\"plot2.png\", width=480,height=480,units=\"px\") # Open PNG file device in WD\n  par(mar = c(5, 5, 2, 1), cex=0.7) # Set margins and text size ratio\n    \n#Create plot and send to a file\n    with(data2,plot(DateTime,Global_active_power,type=\"l\", ylab=\"Global Active Power (killowatts)\", \n                xlab= \"\"))\ndev.off() # close PNG file device",
+    "created" : 1420920572296.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2907018678",
+    "id" : "437AC71A",
+    "lastKnownWriteTime" : 1420924615,
+    "path" : "C:/Documents and Settings/Администратор/Рабочий стол/Kate/Coursera/Exploratary Data Analysis/Week1 Project/ExData_Plotting1/plot2.R",
+    "project_path" : "plot2.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
